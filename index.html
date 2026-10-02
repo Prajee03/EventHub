@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+
+<title>EventHub - Upcoming Events</title>
+
+<link rel="icon" href="img/date.png">
+
+<style>
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f5f7fb;
+        color: #222;
+    }
+
+    nav {
+        width: 100%;
+        padding: 20px 8%;
+        background: white;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+
+        box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+        font-size: 25px;
+        font-weight: bold;
+        color: #5b4bdb;
+    }
+
+    nav ul {
+        list-style: none;
+        display: flex;
+        gap: 30px;
+    }
+
+    nav ul li a {
+        text-decoration: none;
+        color: #333;
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    nav ul li a:hover {
+        color: #5b4bdb;
+    }
+
+    .hero {
+        min-height: 600px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+
+        padding: 80px 20px;
+
+        background:
+            linear-gradient(
+                rgba(91,75,219,0.88),
+                rgba(123,97,255,0.88)
+            ),
+            url("img/event1.png");
+
+        background-size: cover;
+        background-position: center;
+
+        color: white;
+    }
+
+    .hero-content {
+        max-width: 800px;
+    }
+
+    .hero h1 {
+        font-size: 60px;
+        margin-bottom: 20px;
+    }
+
+    .hero p {
+        font-size: 20px;
+        margin-bottom: 30px;
+    }
+
+    .hero-btn {
+        display: inline-block;
+
+        background: white;
+        color: #5b4bdb;
+
+        padding: 15px 35px;
+
+        border-radius: 30px;
+
+        text-decoration: none;
+
+        font-weight: bold;
+
+        transition: 0.3s;
+    }
+
+    .hero-btn:hover {
+        transform: translateY(-4px);
+        background: #222;
+        color: white;
+    }
+
+    .section {
+        width: 90%;
+        max-width: 1150px;
+        margin: 80px auto;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 45px;
+    }
+
+    .section-title h2 {
+        font-size: 38px;
+        margin-bottom: 10px;
+    }
+
+    .section-title p {
+        color: #777;
+    }
+
+    .event-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+
+    .event-card {
+        background: white;
+        border-radius: 18px;
+        overflow: hidden;
+
+        box-shadow:
+            0 8px 30px rgba(0,0,0,0.08);
+
+        transition: 0.3s;
+    }
+
+    .event-card:hover {
+        transform: translateY(-8px);
+
+        box-shadow:
+            0 15px 40px rgba(91,75,219,0.18);
+    }
+
+    .event-image {
+        position: relative;
+    }
+
+    .event-image img {
+        width: 100%;
+        height: 280px;
+        object-fit: cover;
+        display: block;
+    }
+
+    .date {
+        position: absolute;
+
+        top: 20px;
+        left: 20px;
+
+        background: white;
+
+        padding: 10px 15px;
+
+        border-radius: 10px;
+
+        text-align: center;
+
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    .date strong {
+        display: block;
+        font-size: 22px;
+        color: #5b4bdb;
+    }
+
+    .date span {
+        font-size: 12px;
+        color: #777;
+    }
+
+    .event-content {
+        padding: 25px;
+    }
+
+    .event-content h3 {
+        font-size: 25px;
+        margin-bottom: 10px;
+    }
+
+    .event-content p {
+        color: #777;
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+
+    .event-info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        color: #666;
+        font-size: 14px;
+    }
+
+    .event-btn {
+        display: inline-block;
+
+        background: #5b4bdb;
+        color: white;
+
+        padding: 11px 22px;
+
+        border-radius: 25px;
+
+        text-decoration: none;
+
+        font-weight: bold;
+
+        transition: 0.3s;
+    }
+
+    .event-btn:hover {
+        background: #4032ad;
+    }
+
+    .cta {
+        width: 90%;
+        max-width: 1150px;
+
+        margin: 80px auto;
+
+        padding: 70px 30px;
+
+        text-align: center;
+
+        border-radius: 25px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #5b4bdb,
+                #806fff
+            );
+
+        color: white;
+    }
+
+    .cta h2 {
+        font-size: 40px;
+        margin-bottom: 15px;
+    }
+
+    .cta p {
+        margin-bottom: 25px;
+    }
+
+    .cta a {
+        display: inline-block;
+
+        padding: 13px 30px;
+
+        background: white;
+        color: #5b4bdb;
+
+        text-decoration: none;
+
+        border-radius: 25px;
+
+        font-weight: bold;
+    }
+
+    .contact {
+        background: #17171c;
+        color: white;
+
+        text-align: center;
+
+        padding: 60px 20px;
+    }
+
+    .contact h2 {
+        font-size: 32px;
+        margin-bottom: 15px;
+    }
+
+    .contact p {
+        color: #aaa;
+        margin-bottom: 8px;
+    }
+
+    footer {
+        background: #101014;
+        color: #777;
+
+        text-align: center;
+
+        padding: 20px;
+    }
+
+    @media (max-width: 768px) {
+
+        nav {
+            padding: 18px 5%;
+        }
+
+        nav ul {
+            display: none;
+        }
+
+        .hero {
+            min-height: 500px;
+        }
+
+        .hero h1 {
+            font-size: 40px;
+        }
+
+        .hero p {
+            font-size: 16px;
+        }
+
+        .event-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .section-title h2 {
+            font-size: 30px;
+        }
+
+        .cta h2 {
+            font-size: 30px;
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<nav>
+
+    <div class="logo">
+        EventHub 📅
+    </div>
+
+    <ul>
+
+        <li>
+            <a href="#home">Home</a>
+        </li>
+
+        <li>
+            <a href="#events">Events</a>
+        </li>
+
+        <li>
+            <a href="#about">About</a>
+        </li>
+
+        <li>
+            <a href="#contact">Contact</a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <h1>
+            Discover Amazing Events
+        </h1>
+
+        <p>
+            Find exciting events, connect with people,
+            and create unforgettable memories.
+        </p>
+
+        <a href="#events" class="hero-btn">
+            Explore Events →
+        </a>
+
+    </div>
+
+</section>
+
+
+<section class="section" id="events">
+
+    <div class="section-title">
+
+        <h2>
+            Upcoming Events
+        </h2>
+
+        <p>
+            Don't miss these exciting experiences.
+        </p>
+
+    </div>
+
+
+    <div class="event-grid">
+
+
+        <div class="event-card">
+
+            <div class="event-image">
+
+                <img
+                    src="img/event1.png"
+                    alt="Photo Gallery Event"
+                >
+
+                <div class="date">
+
+                    <strong>15</strong>
+
+                    <span>OCT</span>
+
+                </div>
+
+            </div>
+
+
+            <div class="event-content">
+
+                <h3>
+                    Photo Gallery Event
+                </h3>
+
+                <p>
+                    Explore amazing photographs,
+                    creative artwork, and inspiring
+                    visual stories.
+                </p>
+
+                <div class="event-info">
+
+                    <span>
+                        📍 Trichy
+                    </span>
+
+                    <span>
+                        🕒 10:00 AM
+                    </span>
+
+                </div>
+
+                <a href="#" class="event-btn">
+                    View Event
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="event-card">
+
+            <div class="event-image">
+
+                <img
+                    src="img/Flipkart-Upcoming-Sale-2024.jpg"
+                    alt="Flipkart Sale"
+                >
+
+                <div class="date">
+
+                    <strong>20</strong>
+
+                    <span>OCT</span>
+
+                </div>
+
+            </div>
+
+
+            <div class="event-content">
+
+                <h3>
+                    Flipkart Upcoming Sale
+                </h3>
+
+                <p>
+                    Get ready for exciting deals,
+                    discounts, and special offers.
+                </p>
+
+                <div class="event-info">
+
+                    <span>
+                        📍 Online
+                    </span>
+
+                    <span>
+                        🕒 All Day
+                    </span>
+
+                </div>
+
+                <a
+                    href="https://www.flipkart.com/"
+                    target="_blank"
+                    class="event-btn"
+                >
+                    Visit Flipkart
+                </a>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<section class="cta" id="about">
+
+    <h2>
+        Don't Miss Out!
+    </h2>
+
+    <p>
+        Mark your calendar and be part of
+        our upcoming events.
+    </p>
+
+    <a href="#contact">
+        Get In Touch
+    </a>
+
+</section>
+
+
+<section class="contact" id="contact">
+
+    <h2>
+        Contact Us
+    </h2>
+
+    <p>
+        📞 +91 9876543210
+    </p>
+
+    <p>
+        ✉️ eventcollab@gmail.com
+    </p>
+
+    <p>
+        📍 9th Street, Avenue Park,
+        Trichy - 625620
+    </p>
+
+</section>
+
+
+<footer>
+
+    © 2026 EventHub. All Rights Reserved.
+
+</footer>
+
+
+</body>
+
+</html>
